@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup, Tag
 
 def normalize_url(url: str) -> str:
     parsed_url = urlsplit(url)
-    return f"{parsed_url.hostname}{parsed_url.path}".rstrip("/")
+    return f"{parsed_url.netloc}{parsed_url.path}".rstrip("/").lower()
 
 
 def get_heading_from_html(html: str) -> str:
