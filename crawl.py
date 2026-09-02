@@ -37,7 +37,7 @@ def get_first_paragraph_from_html(html: str) -> str:
     return first_p.get_text(strip=True) if isinstance(first_p, Tag) else ""
 
 
-def get_urls_from_html(html, base_url):
+def get_urls_from_html(html: str, base_url: str) -> list[str]:
     beautiful_html = BeautifulSoup(html, "html.parser")
     a_tag = beautiful_html.find_all("a")
     result = []
@@ -56,7 +56,7 @@ def get_urls_from_html(html, base_url):
     return result
 
 
-def get_images_from_html(html, base_url):
+def get_images_from_html(html: str, base_url: str) -> list[str]:
     beautiful_html = BeautifulSoup(html, "html.parser")
     img_tag = beautiful_html.find_all("img")
     result = []
@@ -85,7 +85,7 @@ def extract_page_data(html: str, page_url: str) -> PageData:
     }
 
 
-def get_html(url):
+def get_html(url: str) -> str:
     try:
         response = requests.get(url, headers={"User-Agent": "BootCrawler/1.0"})
     except Exception as e:
@@ -99,3 +99,46 @@ def get_html(url):
         raise Exception(f"Expected text/html, but got: {content_type}")
 
     return response.text
+
+
+def safe_get_html(url: str) -> str | None:
+    try:
+        return get_html(url)
+    except Exception as e:
+        print(f"{e}")
+        return None
+
+
+def crawl_page(
+    base_url: str,
+    current_url: str | None = None,
+    page_data: dict[str, PageData] | None = None,
+) -> dict[str, PageData]:
+    if current_url is None:
+        current_url = base_url
+    if page_data is None:
+        page_data = {}
+
+    base_url_obj = urlsplit(base_url)
+    current_url_obj = urlsplit(current_url)
+    if current_url_obj.netloc != base_url_obj.netloc:
+        return page_data
+
+    normalized_url = normalize_url(current_url)
+
+    if normalized_url in page_data:
+        return page_data
+
+    print(f"crawling {current_url}")
+    html = safe_get_html(current_url)
+    if html is None:
+        return page_data
+
+    page_info = extract_page_data(html, current_url)
+    page_data[normalized_url] = page_info
+
+    next_urls = get_urls_from_html(html, base_url)
+    for next_url in next_urls:
+        page_data = crawl_page(base_url, next_url, page_data)
+
+    return page_data
