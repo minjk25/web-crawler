@@ -2,6 +2,7 @@ import sys
 import asyncio
 from crawl import crawl_site_async
 from rich import print
+from json_report import write_json_report
 
 
 async def main() -> None:
@@ -39,6 +40,8 @@ async def main() -> None:
 
     print("------------")
     print(page_data)
+
+    write_json_report(page_data)
 
     sys.exit(0)
 
