@@ -1,9 +1,10 @@
 import sys
-from crawl import crawl_page
+import asyncio
+from crawl import crawl_site_async
 from rich import print
 
 
-def main():
+async def main() -> None:
     if len(sys.argv) < 2:
         print("no website provided")
         sys.exit(1)
@@ -12,15 +13,19 @@ def main():
         sys.exit(1)
 
     base_url = sys.argv[1]
-    print(f"starting crawl of: {base_url}")
+    print(f"starting async crawl of: {base_url}")
+    print("------------")
 
-    page_data = crawl_page(base_url)
+    page_data = await crawl_site_async(base_url)
 
     print("------------")
 
     print(f"Found {len(page_data)} pages:")
+    print()
+    i = 1
     for page in page_data.values():
-        print(f"- {page['url']}: {len(page['outgoing_links'])} outgoing links")
+        print(f"{i} - {page['url']} has {len(page['outgoing_links'])} outgoing links")
+        i += 1
 
     print("------------")
     print(page_data)
@@ -29,4 +34,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
