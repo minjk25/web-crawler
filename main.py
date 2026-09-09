@@ -5,18 +5,28 @@ from rich import print
 
 
 async def main() -> None:
-    if len(sys.argv) < 2:
-        print("no website provided")
+    if len(sys.argv) < 4:
+        print("usage python main.py <base_url> <max_concurrency> <max_pages>")
         sys.exit(1)
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 4:
         print("too many arguments provided")
         sys.exit(1)
 
     base_url = sys.argv[1]
+    max_concurrency = sys.argv[2]
+    max_pages = sys.argv[3]
+
+    if not max_concurrency.isdigit():
+        print("max_concurrency must be an integer")
+        sys.exit(1)
+    if not max_pages.isdigit():
+        print("max_pages must be an integer")
+        sys.exit(1)
+
     print(f"starting async crawl of: {base_url}")
     print("------------")
 
-    page_data = await crawl_site_async(base_url)
+    page_data = await crawl_site_async(base_url, int(max_concurrency), int(max_pages))
 
     print("------------")
 
