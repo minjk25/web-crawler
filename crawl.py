@@ -77,6 +77,20 @@ def get_images_from_html(html: str, base_url: str) -> list[str]:
     return result
 
 
+def separate_external_internal_urls(
+    outgoing_links: list[str], page_url: str
+) -> tuple[list[str], list[str]]:
+    base_domain = urlsplit(page_url).netloc
+    internal_urls: list[str] = []
+    external_urls: list[str] = []
+    for url in outgoing_links:
+        if urlsplit(url).netloc == base_domain:
+            internal_urls.append(url)
+        else:
+            external_urls.append(url)
+    return internal_urls, external_urls
+
+
 def extract_page_data(html: str, page_url: str) -> PageData:
     return {
         "url": page_url,
