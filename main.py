@@ -27,14 +27,18 @@ async def main() -> None:
         default=float("inf"),
         help="A maximum number of pages to crawl (e.g., --max_pages 25)",
     )
-    parser.add_argument("--v", action="store_true", help="Show details of web crawling")
+    parser.add_argument(
+        "--verbose",
+        choices=["all", "result", "report"],
+        help="Show more details of web crawling (e.g., --verbose report)",
+    )
 
     args = parser.parse_args()
 
     base_url = args.base_url
     max_concurrency = args.max_concur
     max_pages = args.max_pages
-    verbose = args.v
+    verbose = args.verbose
 
     print(f"starting async crawl of: {base_url}")
     print()
@@ -46,7 +50,7 @@ async def main() -> None:
     print(f"Crawling complete. Found {len(page_data)} pages.")
     write_json_report(page_data)
 
-    if verbose:
+    if verbose == "result" or verbose == "all":
         print()
         print("------------------------------------------------")
         print("The result of web crawling:")
@@ -59,13 +63,12 @@ async def main() -> None:
             )
             i += 1
 
+    if verbose == "report" or verbose == "all":
         print()
         print("------------------------------------------------")
         print("The details of the report:")
         print()
         print(page_data)
-        print()
-        print("------------------------------------------------")
 
     sys.exit(0)
 
