@@ -55,7 +55,7 @@ async def main() -> None:
         i = 1
         for page in page_data.values():
             print(
-                f"{i} - {page['url']} has {len(page['outgoing_links'])} outgoing links"
+                f"{i} - {page['url']} has {page['total_outgoing_links']} outgoing links"
             )
             i += 1
 

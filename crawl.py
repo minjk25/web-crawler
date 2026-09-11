@@ -10,7 +10,12 @@ class PageData(TypedDict):
     url: str
     heading: str
     first_paragraph: str
+    total_outgoing_links: int
     outgoing_links: list[str]
+    total_internal_links: int
+    internal_links: list[str]
+    total_external_links: int
+    external_links: list[str]
     image_urls: list[str]
 
 
@@ -92,11 +97,20 @@ def separate_external_internal_urls(
 
 
 def extract_page_data(html: str, page_url: str) -> PageData:
+    outgoing_links: list[str] = get_urls_from_html(html, page_url)
+    separateed_links: tuple[list[str], list[str]] = separate_external_internal_urls(
+        outgoing_links, page_url
+    )
     return {
         "url": page_url,
         "heading": get_heading_from_html(html),
         "first_paragraph": get_first_paragraph_from_html(html),
-        "outgoing_links": get_urls_from_html(html, page_url),
+        "total_outgoing_links": len(outgoing_links),
+        "outgoing_links": outgoing_links,
+        "total_internal_links": len(separateed_links[0]),
+        "internal_links": separateed_links[0],
+        "total_external_links": len(separateed_links[1]),
+        "external_links": separateed_links[1],
         "image_urls": get_images_from_html(html, page_url),
     }
 

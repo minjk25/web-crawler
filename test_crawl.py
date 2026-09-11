@@ -181,7 +181,12 @@ class TestCrawl(unittest.TestCase):
             "url": "https://crawler-test.com",
             "heading": "Test Title",
             "first_paragraph": "This is the first paragraph.",
+            "total_outgoing_links": 1,
             "outgoing_links": ["https://crawler-test.com/link1"],
+            "total_internal_links": 1,
+            "internal_links": ["https://crawler-test.com/link1"],
+            "total_external_links": 0,
+            "external_links": [],
             "image_urls": ["https://crawler-test.com/image1.jpg"],
         }
         self.assertEqual(actual, expected)
@@ -209,7 +214,12 @@ class TestCrawl(unittest.TestCase):
             "url": "https://crawler-test.com",
             "heading": "",
             "first_paragraph": "",
+            "total_outgoing_links": 0,
             "outgoing_links": [],
+            "total_internal_links": 0,
+            "internal_links": [],
+            "total_external_links": 0,
+            "external_links": [],
             "image_urls": [],
         }
         self.assertEqual(actual, expected)
