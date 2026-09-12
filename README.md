@@ -47,15 +47,21 @@ Optional arguments:
 
 ### Example:
 
-Ex.1: crawl `https://learnwebscraping.dev/practice/ecommerce/` (with default max_concur = 3 and max_pages = all)
+#### Ex.1: crawl `https://learnwebscraping.dev/practice/ecommerce/` (with default max_concur = 3 and max_pages = all)
 ```bash
 uv run main.py https://learnwebscraping.dev/practice/ecommerce/
 ```
 
-Ex.2: crawl `https://learnwebscraping.dev/practice/ecommerce/` with max_concur = 5, max_pages = 25 and show report details
+   <img src="demo_images/demo1.gif" width="550">
+
+
+#### Ex.2: crawl `https://learnwebscraping.dev/practice/ecommerce/` with max_concur = 5, max_pages = 25 and show report details
 ```bash
 uv run main.py https://learnwebscraping.dev/practice/ecommerce/ --max_concur 5 --max_pages 25 --verbose report
 ```
+
+<img src="demo_images/demo2.gif" width="550">
+
 
 ### Note:
 If crawling takes too long (which can happen when a page has many internal links), you can explicitly stop the program at any time with `Ctrl + C`
