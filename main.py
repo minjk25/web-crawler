@@ -40,6 +40,18 @@ async def main() -> None:
     max_pages = args.max_pages
     verbose = args.verbose
 
+    if max_concurrency <= 0:
+        print(
+            f"Error --max_concur input ({max_concurrency}): max_concurrency must be a positive integer"
+        )
+        sys.exit(1)
+
+    if max_pages <= 0:
+        print(
+            f"Error --max_pages input ({max_pages}): max_pages must be a positive integer"
+        )
+        sys.exit(1)
+
     print(f"starting async crawl of: {base_url}")
     print()
 

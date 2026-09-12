@@ -54,7 +54,7 @@ uv run main.py https://learnwebscraping.dev/practice/ecommerce/
 
    <img src="demo_images/demo1.gif" width="550">
 
-<br><br>
+<br>
 
 Ex.2: crawl `https://learnwebscraping.dev/practice/ecommerce/` with max_concur = 5, max_pages = 15 and show more details of result and report (`--verbose all`)
 ```bash
@@ -63,7 +63,6 @@ uv run main.py https://learnwebscraping.dev/practice/ecommerce/ --max_concur 5 -
 
 <img src="demo_images/demo2.gif" width="550">
 
-<br>
 
 ### Note:
 If crawling takes too long (which can happen when a page has many internal links), you can explicitly stop the program at any time with `Ctrl + C`
