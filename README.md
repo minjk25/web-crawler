@@ -40,7 +40,7 @@ Once crawling is complete, the collected data is exported to a `report.json` fil
 uv run main.py <your website to be crawled>
 ```
 
-Optional arguments:
+### Optional arguments:
 - `--max_concur <int>` – A maximum concurrency to limit the number of requests allowed at once (e.g., `--max_concur 5`)
 - `--max_pages <int>` – A maximum number of pages to crawl (e.g., `--max_pages 25`)
 - `--verbose <str: result, report, all>` – Show more details of web crawling (e.g., `--verbose report`)
